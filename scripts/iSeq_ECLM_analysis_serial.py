@@ -15,9 +15,9 @@ parser = argparse.ArgumentParser(description="Assemble genomes using SKESA (or, 
 parser.add_argument("-w", "--wait", help="Launch job later (Default = Off)", action="store_true")
 parser.add_argument("-t", "--trim", help="Turn on read trimming (trimmomatic ILLUMINACLIP:NexteraPE-PE.fa:2:30:10 SLIDINGWINDOW:4:20)", action="store_true")
 parser.add_argument("-q", "--no_qc", help="Turn off default mapping/assembly QC output", action="store_true")
-parser.add_argument("-p", "--threads", help="Maximum number of processors to use (Default = 24)", type = int, default=24)
-parser.add_argument("-n", "--jobs", help="Maximum number of jobs to run simultaneously, equivalent to perl_fork_univ.pl argument (Default = 6)", type = int, default=6)
-parser.add_argument("-m", "--max_mem", help="Maximum total memory allocation to simultaneous processes in GB (Default = 96)", type = int, default=96)
+parser.add_argument("-p", "--threads", help="Maximum number of processors to use (Default = 8)", type = int, default=8)
+#parser.add_argument("-n", "--jobs", help="Maximum number of jobs to run simultaneously, equivalent to perl_fork_univ.pl argument (Default = 6)", type = int, default=6)
+parser.add_argument("-m", "--max_mem", help="Maximum total memory allocation to simultaneous processes in GB (Default = 24)", type = int, default=24)
 parser.add_argument("-d", "--spades", help="Use SPAdes instead of SKESA for assembly (Default = Off)", action="store_true")
 parser.add_argument("Fastq", help="Input forward fastqs to be assembled", nargs='+')
 args = parser.parse_args()
@@ -32,14 +32,14 @@ tot_cpus = mp.cpu_count()
 if ncpus > tot_cpus:
 	ncpus = tot_cpus
 
-njobs = args.jobs #The number of jobs to be run simultaneously
+#njobs = args.jobs #The number of jobs to be run simultaneously
 totjobs = len(args.Fastq) #The total number of input sequences, which is also the total number of jobs to run
 
 #Determining the number of threads per job and number of jobs to run simultaneously using the bounds provided by the user
-if njobs > totjobs: 
-	njobs = totjobs
+#if njobs > totjobs: 
+#	njobs = totjobs
 	
-memper = int(args.max_mem/njobs)
+memper = int(args.max_mem)#/njobs)
 
 #This is a bit dumb and clunky, might be worth improving at some point to handle different input scenarios
 if memper <=10:
@@ -50,10 +50,10 @@ if memper <=10:
 elif memper < 16:
 	print("Might not be enough memory, trying anyway")
 
-if njobs > ncpus:
-	njobs = ncpus
+#if njobs > ncpus:
+#	njobs = ncpus
 	
-threadsper = int(ncpus/njobs)
+threadsper = int(ncpus)#/njobs)
 
 strT = time.strftime("%Y%m%d_%H%M%S")
 #This creates an input file for perl_fork_univ.pl with one line per input sequence
@@ -138,7 +138,7 @@ ss.write("export CLASSPATH=/local/workdir/miniconda3/envs/iSeq_EC_LM_mlv/share/p
 ss.write("export CLASSPATH=/programs/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar:$CLASSPATH\n")
 ss.write("sed -i 's/MaxCpuCores=/MaxCpuCores=" + str(threadsper) + "/' snppipeline.conf\n")
 ss.write("\nmkdir FastQC_output\n")
-ss.write("\nperl_fork_univ.pl " + fn1 + " " + str(njobs) + " &>" + fn1 + ".log \n")
+ss.write("\nsh ./" + fn1 + " &>" + fn1 + ".log \n")
 ss.write("(head -n 1 " + prefs[0] + "/transposed_report.tsv && cat assembly_stats_nohead.tsv) >assembly_stats.tsv && rm assembly_stats_nohead.tsv\n")
 
 ss.write("\nfastqc --version >>software_versions_" + strT + ".txt\n")
