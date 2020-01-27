@@ -197,7 +197,7 @@ ss.write("\njoin -j 1 --header -e NA -a2 -o 2.1,1.2,1.3,2.2,2.3  -t$'\t' ECOL_se
 ss.write("\necho -e \"Read QC\t$(fastqc -v)\" >Software_table_" + strT + ".tsv\n")
 ss.write("echo -e \"Assembly and QC\t$(skesa -v), $(quast.py -v)\" >>Software_table_" + strT + ".tsv\n")
 ss.write("echo -e \"Alignment\t$(run_snp_pipeline.sh --version)\" >>Software_table_" + strT + ".tsv\n")
-ss.write("echo -d \"Subtyping\t$(mlst -v), $(ectyper -V)\" >>Software_table_" + strT + ".tsv\n")
+ss.write("echo -e \"Subtyping\t$(mlst -v), $(ectyper -V)\" >>Software_table_" + strT + ".tsv\n")
 ss.write("echo -e \"Gene Annotation\t$(conda list|grep \"amrfinder\"|tr -s ' ' |cut -d \" \" -f 1,2)")
 ss.write(" db:$(ls -l $(which amrfinder|sed 's/amrfinder/data/')|grep \"latest\"|cut -d \">\" -f 2|cut -d \" \" -f 2)")
 ss.write(", $(abricate -V)\" >>Software_table_" + strT + ".tsv\n")
