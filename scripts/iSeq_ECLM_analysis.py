@@ -205,6 +205,7 @@ ss.write(", $(abricate -V)\" >>Software_table_" + strT + ".tsv\n")
 
 #Generate report
 ss.write("\nsed 's/DATETIME/" + strT + "/g' /workdir/iSeq_Ecoli/report_templates/testreport.Rmd >iSeq_report_" + strT + ".Rmd\n")
+ss.write("sed -i 's~REFDIR~" + RefDir + "~' iSeq_report_" + strT + ".Rmd\n")
 ss.write("/programs/R-3.5.0/bin/Rscript -e \"rmarkdown::render('iSeq_report_" + strT + ".Rmd', clean=TRUE)\"\n")
 
 ss.write("\nconda deactivate")
