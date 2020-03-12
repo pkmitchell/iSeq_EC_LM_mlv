@@ -23,7 +23,7 @@ parser.add_argument("Fastq", help="Input forward fastqs to be assembled", nargs=
 args = parser.parse_args()
 
 #Creating dictionary to match file stems to reference sequences
-RefDict = {"804-002-iSeq-EC-11":"ECP19-198", "804-002-iSeq-EC-12":"ECP19-598", "804-002-iSeq-EC-13":"ECP19-798", "804-002-iSeq-EC-14":"ECP19-2498","804-002-iSeq-LM-19":"LMP18-H8393","804-002-iSeq-LM-20":"LMP18-H2446", "804-002-iSeq-EC-15":"N17EC0320", "804-002-iSeq-EC-16":"N17EC0326","804-002-iSeq-EC-17":"N17ECO616","804-002-iSeq-EC-18":"N17EC1164", "804-002-iSeq-LM-21":"FDA00008248", "804-002-iSeq-LM-22":"FDA00006667"}
+RefDict = {"804-002-iSeq-EC-11":"ECP19-198", "804-002-iSeq-EC-12":"ECP19-598", "804-002-iSeq-EC-13":"ECP19-798", "804-002-iSeq-EC-14":"ECP19-2498","804-002-iSeq-LM-19":"LMP18-H8393","804-002-iSeq-LM-20":"LMP18-H2446", "804-002-iSeq-EC-15":"N17EC0320", "804-002-iSeq-EC-16":"N17EC0326","804-002-iSeq-EC-17":"N17EC0616","804-002-iSeq-EC-18":"N17EC1164", "804-002-iSeq-LM-21":"FDA00008248", "804-002-iSeq-LM-22":"FDA00006667"}
 RefDir = "/workdir/iSeq_Ecoli/ref_output/"
 
 #Determining the number of jobs and threads per job
