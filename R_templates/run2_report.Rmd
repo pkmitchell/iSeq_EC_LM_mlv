@@ -25,7 +25,7 @@ AnnotationTable$Isolate<-substr(AnnotationTable$Isolate,14,18)
 SubtypingTable<-read.table("SubtypeTable_DATETIME.tsv",header=T, sep="\t",check.names=T)
 SubtypingTable$Isolate<-substr(SubtypingTable$Isolate,14,18)
 SoftwareTable<-read.table("Software_table_DATETIME.tsv", header=F, sep="\t")
-IsolateTable<-read.table("REFDIR/run1_sample_table.tsv", header=T, sep="\t",check.names=T)
+IsolateTable<-read.table("REFDIR/run2_sample_table.tsv", header=T, sep="\t",check.names=T)
 
 ```
   
